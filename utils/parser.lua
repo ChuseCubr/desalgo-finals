@@ -1,6 +1,7 @@
 local SKIN = require("dummy")
 local parser = {}
 
+-- Checks if given file path exists.
 function parser.file_exists(file_path)
   local f = io.open(file_path, 'r')
   if f ~= nil then
@@ -11,9 +12,10 @@ function parser.file_exists(file_path)
   end
 end
 
-function parser.parse(file_path)
+-- Parses the CSV at the given path into a 2D table.
+function parser.parse_csv(file_path)
   if not parser.file_exists(file_path) then
-    return nil
+    error("File " .. file_path .. " does not exist.")
   end
 
   local sep = SKIN:GetVariable("Delimiter", "")
@@ -36,6 +38,21 @@ function parser.parse(file_path)
   end
 
   return parsed
+end
+
+-- Parses the CSV files at each file path in the given table.
+-- Parsed data is in the form of a 3D table: a 2D table with each cell
+-- containing a table of the parsed values from that corresponding cell
+-- in each file.
+-- For mouse actions.
+function parser.bulk_parse(file_paths)
+  for path in file_paths do
+    local parsed = parser.parse_csv(path)
+    for row in parsed do
+      for col in parsed do
+      end
+    end
+  end
 end
 
 return parser

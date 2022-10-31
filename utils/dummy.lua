@@ -1,3 +1,5 @@
+-- Dummy SKIN object for testing without Rainmeter.
+
 local SKIN = {}
 local variables = {
   ["Delimiter"] = ","

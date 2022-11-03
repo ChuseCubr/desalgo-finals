@@ -29,23 +29,33 @@ end
 -- Schedule class constructor.
 -- Queue containing the day's events in order.
 function Schedule:new(raw_sched, day)
-  day = day + 2
+  if raw_sched == nil or day == nil then
+    error("Missing args for instantiating schedule queue")
+  end
+
   local o = Queue:new()
   setmetatable(o, self)
   self.__index = self
 
-  if raw_sched == nil or day == nil then
-    error("Missing args for instantiating schedule queue")
-  end
+  o.thresholds = {}
+  local threshold_filter = {}
+
+  day = day + 2
   for row = 2, #raw_sched, 1 do
-    o:enqueue(Event:new(
-      raw_sched[row][day],
-      raw_sched[row][1],
-      raw_sched[row][2]
-    ))
-    table.insert(o.thresholds, raw_sched[row][1])
+    local label = raw_sched[row][day]
+    local start_time = raw_sched[row][1]
+    local end_time = raw_sched[row][2]
+    o:enqueue(Event:new(label, start_time, end_time))
+    threshold_filter[start_time] = true
+    threshold_filter[end_time] = true
   end
-  table.insert(o.thresholds, raw_sched[#raw_sched][2])
+
+  for key, _ in pairs(threshold_filter) do
+    table.insert(o.thresholds, key)
+  end
+
+  o:remove_empty()
+  o:merge_dupes()
 
   return o
 end

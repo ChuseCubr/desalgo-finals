@@ -1,12 +1,20 @@
 -- Dummy SKIN object for testing without Rainmeter.
+local Dummy = {}
 
-local SKIN = {}
-local variables = {
-  ["Delimiter"] = ","
-}
-
-function SKIN:GetVariable(var_name, default)
-  return variables[var_name] or default or nil
+function Dummy:new()
+  local o = {}
+  setmetatable(o, self)
+  self.__index = self
+  o.variables = {
+    ["Delimiter"] = ",",
+    ["Path"] = "schedule.csv",
+    ["ISOWeek"] = "true"
+  }
+  return o
 end
 
-return SKIN
+function Dummy:GetVariable(var_name, default)
+  return self.variables[var_name] or default or nil
+end
+
+return Dummy

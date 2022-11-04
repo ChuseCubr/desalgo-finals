@@ -24,7 +24,6 @@ local function display_sched(now)
     print(event.start_time .. "-" .. event.end_time)
     print("\27[0m")
   end
-  sched:reset()
   print("Press `CTRL+C` to exit.")
 end
 
@@ -45,7 +44,6 @@ function Update()
   while now > sched.thresholds:peek() do
     os.execute("cls")
     sched.thresholds:iterate()
-    sched:reset()
     display_sched(now)
   end
 end

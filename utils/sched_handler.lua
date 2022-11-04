@@ -142,6 +142,7 @@ function Schedule:iterator()
       i = i + 1
       return self:iterate()
     end
+    self:reset()
   end
 end
 
@@ -159,7 +160,6 @@ function Schedule:__tostring()
     stringed = stringed .. " | "
   end
 
-  self:reset()
   return stringed
 end
 

@@ -105,7 +105,7 @@ end
 function Schedule:set_day(day)
   self.day = day
   self:reset()
-  self.init_thresholds:reset()
+  self.thresholds:reset()
 end
 
 function Schedule:peek()

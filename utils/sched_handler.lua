@@ -14,18 +14,19 @@ function Schedule:new(raw_sched, day)
   setmetatable(o, self)
   self.__index = self
 
-  o.thresholds = {}
-  o.day = 2
+  o.thresholds = LinkedList:new()
+  o.day = 0
 
-  o:init_sched(raw_sched, day)
-  o:init_thresholds(raw_sched)
+  o:init_sched(raw_sched)
   o:remove_empty()
   o:merge_dupes()
+
+  o:init_thresholds(raw_sched)
 
   return o
 end
 
--- Converts the 2d table into a table of lists
+-- Converts the 2d table into a table of lists.
 function Schedule:init_sched(raw)
   for day = 1, 7, 1 do
     self[day] = LinkedList:new()
@@ -39,7 +40,9 @@ function Schedule:init_sched(raw)
   end
 end
 
+-- Adds the starts and ends into a collection to limit checking.
 function Schedule:init_thresholds(raw)
+  local thresholds = {}
   local threshold_filter = {}
   for row = 2, #raw, 1 do
     local start_time = raw[row][1]
@@ -49,9 +52,13 @@ function Schedule:init_thresholds(raw)
   end
 
   for key, _ in pairs(threshold_filter) do
-    table.insert(self.thresholds, key)
+    table.insert(thresholds, key)
   end
-  table.sort(self.thresholds)
+  table.sort(thresholds)
+
+  for _, val in ipairs(thresholds) do
+    self.thresholds:append(val)
+  end
 end
 
 -- Removes events with blank labels.
@@ -94,6 +101,7 @@ function Schedule:merge_dupes()
   end
 end
 
+-- setters and wrappers
 function Schedule:set_day(day)
   self.day = day
 end

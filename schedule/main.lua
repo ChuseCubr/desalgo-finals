@@ -9,11 +9,13 @@ local sched
 -- There's too little time for drastic changes, so I'll settle on a
 -- proof-of-concept CLI for now.
 
+-- Temporarily stops execution.
 local function sleep(t)
   local n = t or 1
   os.execute("ping -n " .. tonumber(n + 1) .. " localhost > NUL")
 end
 
+-- Fancily prints events.
 local function display_sched(now)
   for event in sched:iterator() do
     local color = SKIN:GetVariable(event:get_status(now), "\27[0m")
@@ -28,10 +30,6 @@ function Initialize()
   local file_path = SKIN:GetVariable("Path", "schedule.csv")
   local sched_table = parser.parse_csv(file_path)
   sched = Schedule:new(sched_table)
-  -- for day = 1, 7, 1 do
-  --   sched:set_day(day)
-  --   print(sched)
-  -- end
 end
 
 function Update()
@@ -44,10 +42,8 @@ function Update()
 
   while now > sched.thresholds:peek() do
     os.execute("cls")
-
     sched.thresholds:iterate()
     sched:reset()
-
     display_sched(now)
   end
 end
@@ -59,24 +55,5 @@ local function main()
     sleep()
   end
 end
-
--- local function test()
---   local times = {
---     "06:30",
---     "08:30",
---     "10:30",
---     "12:30",
---     "14:30",
---     "16:30",
---     "18:30",
---   }
---   Initialize()
---   for _, time in ipairs(times) do
---     Update(time)
---     sleep(1)
---   end
--- end
-
--- test()
 
 main()

@@ -8,7 +8,10 @@ function Dummy:new()
   o.variables = {
     ["Delimiter"] = ",",
     ["Path"] = "schedule.csv",
-    ["ISOWeek"] = "true"
+    ["ISOWeek"] = "true",
+    ["Upcoming"] = "\27[0m",
+    ["Ongoing"] = "\27[32m",
+    ["Completed"] = "\27[31m",
   }
   return o
 end

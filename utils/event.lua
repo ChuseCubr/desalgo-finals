@@ -16,12 +16,12 @@ end
 -- Used for dynamic styles.
 function Event:get_status(time)
   if time < self.start_time then
-    return "upcoming"
+    return "Upcoming"
   end
   if time < self.end_time then
-    return "ongoing"
+    return "Ongoing"
   end
-  return "completed"
+  return "Completed"
 end
 
 -- Override metamethod for easier printing.

@@ -88,7 +88,8 @@ function Schedule:merge_dupes()
     local prev = self:peek()
 
     for _ = 2, length, 1 do
-      local here = self:iterate()
+      self:iterate()
+      local here = self:peek()
       if (prev.label == here.label
           and prev.end_time == here.start_time) then
         prev.end_time = here.end_time
@@ -129,6 +130,18 @@ function Schedule:__len()
   return self[self.day].len
 end
 
+function Schedule:iterator()
+  local i = 1
+  local n = #self
+  self:reset()
+  return function()
+    while i <= n do
+      i = i + 1
+      return self:iterate()
+    end
+  end
+end
+
 -- Override metamethod for easier printing.
 -- For debugging purposes.
 function Schedule:__tostring()
@@ -136,11 +149,11 @@ function Schedule:__tostring()
     return ""
   end
 
-  local stringed = tostring(self:peek())
+  local stringed = " | "
 
-  for _ = 2, #self, 1 do
-    stringed = stringed .. ", "
-    stringed = stringed .. tostring(self:iterate())
+  for event in self:iterator() do
+    stringed = stringed .. tostring(event)
+    stringed = stringed .. " | "
   end
 
   self:reset()

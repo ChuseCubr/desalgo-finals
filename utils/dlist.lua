@@ -49,8 +49,9 @@ function LinkedList:iterate()
   if self.ptr == nil then
     return nil
   end
+  local value = self.ptr.value
   self.ptr = self.ptr.next
-  return self:peek()
+  return value
 end
 
 -- Resets the pointer to the head of the list.

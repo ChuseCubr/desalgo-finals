@@ -1,4 +1,4 @@
-local SKIN = require("dummy"):new()
+local SKIN = require("settings"):new()
 local parser = {}
 
 -- Checks if given file path exists.

@@ -104,6 +104,8 @@ end
 -- setters and wrappers
 function Schedule:set_day(day)
   self.day = day
+  self:reset()
+  self.init_thresholds:reset()
 end
 
 function Schedule:peek()

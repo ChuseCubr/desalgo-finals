@@ -4,7 +4,7 @@ local Schedule = LinkedList:new()
 
 -- Schedule class constructor.
 -- Queue containing the day's events in order.
-function Schedule:new(raw_sched, day)
+function Schedule:new(raw_sched)
   if raw_sched == nil then
     error("Missing args for instantiating schedule queue")
   end
@@ -59,6 +59,7 @@ function Schedule:init_thresholds(raw)
   for _, val in ipairs(thresholds) do
     self.thresholds:append(val)
   end
+  self.thresholds:append("24:00")
 end
 
 -- Removes events with blank labels.
@@ -142,6 +143,7 @@ function Schedule:__tostring()
     stringed = stringed .. tostring(self:iterate())
   end
 
+  self:reset()
   return stringed
 end
 

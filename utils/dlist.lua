@@ -77,7 +77,7 @@ end
 -- Removes and returns the value at the pointer
 function LinkedList:remove()
   if self.ptr == nil then
-    error("Pointer is out of bounds.")
+    return
   end
 
   local value = self.ptr.value

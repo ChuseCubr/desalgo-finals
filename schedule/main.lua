@@ -23,6 +23,7 @@ local function display_sched(now)
     print(event.start_time .. "-" .. event.end_time)
     print("\27[0m")
   end
+  sched:reset()
   print("Press `CTRL+C` to exit.")
 end
 
@@ -30,6 +31,8 @@ function Initialize()
   local file_path = SKIN:GetVariable("Path", "schedule.csv")
   local sched_table = parser.parse_csv(file_path)
   sched = Schedule:new(sched_table)
+  os.execute("cls")
+  display_sched(os.date("%H:%M"))
 end
 
 function Update()

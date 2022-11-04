@@ -67,6 +67,7 @@ function Schedule:remove_empty()
   for day = 1, 7, 1 do
     self:set_day(day)
     local length = #self
+
     for _ = 1, length, 1 do
       local here = self:peek()
       if here.label == "" then
@@ -90,6 +91,7 @@ function Schedule:merge_dupes()
     for _ = 2, length, 1 do
       self:iterate()
       local here = self:peek()
+
       if (prev.label == here.label
           and prev.end_time == here.start_time) then
         prev.end_time = here.end_time
@@ -134,6 +136,7 @@ function Schedule:iterator()
   local i = 1
   local n = #self
   self:reset()
+
   return function()
     while i <= n do
       i = i + 1

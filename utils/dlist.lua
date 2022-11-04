@@ -77,37 +77,29 @@ end
 -- Removes and returns the value at the pointer
 function LinkedList:remove()
   if self.ptr == nil then
-    return
+    error("Attempted to remove from empty list.")
   end
 
-  local value = self.ptr.value
-
-  if self.len == 1 then
-    self.head = nil
-    self.tail = nil
-    self.ptr = self.head
-    self.len = 0
-    return value
-  end
-
-  -- if the pointer is at the head/tail, change it as well
-  if self.ptr == self.head then
+  if self.ptr.prev == nil then
+    -- if head, make the next node the head
     self.head = self.head.next
-  end
-  if self.ptr == self.tail then
-    self.tail = self.tail.prev
-    self.tail.next = nil
-  end
-
-  -- if the prev/next exists, change the link to it as well
-  if self.ptr.prev ~= nil then
+    self.head.prev = nil
+  else
+    -- if not, make the prev node point to the next
     self.ptr.prev.next = self.ptr.next
   end
-  if self.ptr.next ~= nil then
+
+  if self.ptr.next == nil then
+    -- if tail, make the prev node the tail
+    self.tail = self.tail.prev
+    self.tail.next = nil
+  else
+    -- if not, make the next node point to the prev
     self.ptr.next.prev = self.ptr.prev
   end
 
   -- update pointer and length
+  local value = self.ptr.value
   self.ptr = self.ptr.next
   self.len = self.len - 1
   return value

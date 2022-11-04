@@ -25,7 +25,12 @@ function parser.parse_csv(file_path)
     local line_buffer = {}
     local word_buffer = ""
 
-    for char in line:gmatch(".") do
+    -- for empty last column
+    local char
+
+    -- stringing together words and putting them into a table
+    for ch in line:gmatch(".") do
+      char = ch
       if char == sep then
         table.insert(line_buffer, word_buffer)
         word_buffer = ""
@@ -34,6 +39,12 @@ function parser.parse_csv(file_path)
       end
     end
 
+    -- if empty last column, the loop above won't append a ""
+    if char == "," then
+      table.insert(line_buffer, "")
+    end
+
+    -- insert the row into the 2d table
     table.insert(parsed, line_buffer)
   end
 

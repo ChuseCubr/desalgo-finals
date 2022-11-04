@@ -9,12 +9,13 @@ function Schedule:new(raw_sched, day)
     error("Missing args for instantiating schedule queue")
   end
 
-  local o = LinkedList:new()
-  -- local o = {}
+  -- local o = LinkedList:new()
+  local o = {}
   setmetatable(o, self)
   self.__index = self
 
   o.thresholds = {}
+  o.day = 2
 
   o:init_sched(raw_sched, day)
   o:init_thresholds(raw_sched)
@@ -25,17 +26,17 @@ function Schedule:new(raw_sched, day)
 end
 
 -- Converts the 2d table into a table of lists
-function Schedule:init_sched(raw, day)
-  -- for day = 1, 7, 1 do
-  --   self[day] = LinkedList:new()
-  for row = 2, #raw, 1 do
-    local label = raw[row][day + 2]
-    local start_time = raw[row][1]
-    local end_time = raw[row][2]
-    -- self[day]:append(Event:new(label, start_time, end_time))
-    self:append(Event:new(label, start_time, end_time))
+function Schedule:init_sched(raw)
+  for day = 1, 7, 1 do
+    self[day] = LinkedList:new()
+    for row = 2, #raw, 1 do
+      local label = raw[row][day + 2]
+      local start_time = raw[row][1]
+      local end_time = raw[row][2]
+      self[day]:append(Event:new(label, start_time, end_time))
+      -- self:append(Event:new(label, start_time, end_time))
+    end
   end
-  -- end
 end
 
 function Schedule:init_thresholds(raw)
@@ -55,86 +56,80 @@ end
 
 -- Removes events with blank labels.
 function Schedule:remove_empty()
-  -- for day = 1, 7, 1 do
-  -- self:set_day(day)
-  local length = self.len
-  if length == 0 then
-    return
-  end
-
-  for _ = 1, length, 1 do
-    local here = self:peek()
-    if here.label == "" then
-      self:remove()
-    else
-      self:increment()
+  for day = 1, 7, 1 do
+    self:set_day(day)
+    local length = #self
+    for _ = 1, length, 1 do
+      local here = self:peek()
+      if here.label == "" then
+        self:remove()
+      else
+        self:iterate()
+      end
     end
-  end
 
-  self:reset()
-  -- end
+    self:reset()
+  end
 end
 
 -- Merges adjacent events with identical labels.
 function Schedule:merge_dupes()
-  -- for day = 1, 7, 1 do
-  -- self:set_day(day)
-  local length = self.len
-  if length == 0 then
-    return
-  end
+  for day = 1, 7, 1 do
+    self:set_day(day)
+    local length = #self
+    local prev = self:peek()
 
-  local prev = self:peek()
-
-  for _ = 2, length, 1 do
-    local here = self:increment()
-    if (prev.label == here.label
-        and prev.end_time == here.start_time) then
-      -- uses pointers behind the scenes,
-      -- so this will change what's in the list
-      prev.end_time = here.end_time
-      self:remove()
-    else
-      prev = here
+    for _ = 2, length, 1 do
+      local here = self:iterate()
+      if (prev.label == here.label
+          and prev.end_time == here.start_time) then
+        prev.end_time = here.end_time
+        self:remove()
+      else
+        prev = here
+      end
     end
-  end
 
-  self:reset()
-  -- end
+    self:reset()
+  end
 end
 
--- function Schedule:set_day(day)
---   self.day = day
--- end
+function Schedule:set_day(day)
+  self.day = day
+end
 
--- function Schedule:peek()
---   return self[self.day]:peek()
--- end
+function Schedule:peek()
+  return self[self.day]:peek()
+end
 
--- function Schedule:increment()
---   return self[self.day]:increment()
--- end
+function Schedule:iterate()
+  return self[self.day]:iterate()
+end
 
--- function Schedule:reset()
---   return self[self.day]:reset()
--- end
+function Schedule:reset()
+  return self[self.day]:reset()
+end
+
+function Schedule:remove()
+  return self[self.day]:remove()
+end
 
 function Schedule:__len()
-  return self.len
+  return self[self.day].len
 end
 
 -- Override metamethod for easier printing.
 -- For debugging purposes.
 function Schedule:__tostring()
-  if self.len == 0 then
+  if #self == 0 then
     return ""
   end
 
   local stringed = tostring(self:peek())
 
-  for _ = 2, self.len, 1 do
+  for _ = 2, #self, 1 do
     stringed = stringed .. ", "
-    stringed = stringed .. tostring(self:increment())
+    stringed = stringed .. tostring(self:iterate())
   end
 
   return stringed

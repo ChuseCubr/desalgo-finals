@@ -45,7 +45,7 @@ function LinkedList:peek()
 end
 
 -- Increments the pointer and gets the new value.
-function LinkedList:increment()
+function LinkedList:iterate()
   if self.ptr == nil then
     return nil
   end
@@ -124,7 +124,7 @@ function LinkedList:__tostring()
 
   for _ = 2, self.len, 1 do
     stringed = stringed .. ", "
-    stringed = stringed .. tostring(self:increment())
+    stringed = stringed .. tostring(self:iterate())
   end
 
   return stringed

@@ -2,6 +2,10 @@
 
 A reimplementation of my project [Docket](https://github.com/ChuseCubr/RM-Docket) with more appropriate data structures and algorithms.
 
+![Schedule Example](https://user-images.githubusercontent.com/27886422/200131964-a28e824c-ad10-4923-b262-e8b768db7577.png)
+
+![Reminders Example](https://user-images.githubusercontent.com/27886422/200131966-55a1dab1-d7ca-40e8-baea-22768801b662.png)
+
 ## Table of Contents
 
 * [Dependencies](#dependencies)

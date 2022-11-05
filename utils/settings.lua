@@ -6,9 +6,14 @@ function Dummy:new()
   setmetatable(o, self)
   self.__index = self
   o.variables = {
+    -- csv delimiter based on your locale (most use `,`)
     ["Delimiter"] = ",",
-    ["Path"] = "schedule.csv",
-    ["ISOWeek"] = "true",
+    ["SchedulePath"] = "schedule.csv",
+    ["RemindersPath"] = "reminders.csv",
+    -- sunday first day of the week
+    ["ISOWeek"] = false,
+    -- change the number after the [
+    -- for reference: https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
     ["Upcoming"] = "\27[0m",
     ["Ongoing"] = "\27[32m",
     ["Completed"] = "\27[31m",
@@ -17,7 +22,15 @@ function Dummy:new()
 end
 
 function Dummy:GetVariable(var_name, default)
-  return self.variables[var_name] or default or nil
+  if self.variables[var_name] ~= nil then
+    return self.variables[var_name]
+  end
+
+  if default ~= nil then
+    return default
+  end
+
+  return nil
 end
 
 return Dummy

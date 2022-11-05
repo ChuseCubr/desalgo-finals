@@ -38,11 +38,7 @@ function parser.parse_csv(file_path)
         word_buffer = word_buffer .. char
       end
     end
-
-    -- if empty last column, the loop above won't append a ""
-    if char == "," then
-      table.insert(line_buffer, "")
-    end
+    table.insert(line_buffer, word_buffer)
 
     -- insert the row into the 2d table
     table.insert(parsed, line_buffer)

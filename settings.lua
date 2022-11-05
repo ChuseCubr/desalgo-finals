@@ -6,12 +6,16 @@ function Dummy:new()
   setmetatable(o, self)
   self.__index = self
   o.variables = {
-    -- csv delimiter based on your locale (most use `,`)
-    ["Delimiter"] = ",",
+    -- csv file names
     ["SchedulePath"] = "schedule.csv",
     ["RemindersPath"] = "reminders.csv",
+
+    -- csv delimiter based on your locale (most use `,`)
+    ["Delimiter"] = ",",
+
     -- sunday first day of the week
     ["ISOWeek"] = true,
+
     -- change the number after the [
     -- for reference: https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
     ["Upcoming"] = "\27[0m",

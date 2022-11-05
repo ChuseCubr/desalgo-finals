@@ -5,6 +5,8 @@ function Dummy:new()
   local o = {}
   setmetatable(o, self)
   self.__index = self
+
+  -- configure your settings here
   o.variables = {
     -- csv file names
     ["SchedulePath"] = "schedule.csv",
@@ -22,6 +24,7 @@ function Dummy:new()
     ["Ongoing"] = "\27[32m",
     ["Completed"] = "\27[31m",
   }
+
   return o
 end
 

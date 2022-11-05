@@ -65,7 +65,7 @@ For example:
 
 ## Important Note
 
-If you exit the program incorrectly (not pressing `CTRL+C`), you well get an error popup that won't go away:
+If you exit the program incorrectly (not pressing `CTRL+C`), you will get an error popup that won't go away:
 
 ![image](https://user-images.githubusercontent.com/27886422/200134864-03dd8d81-ddee-4bd8-898b-4d5f96ad73c2.png)
 

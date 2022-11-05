@@ -1,7 +1,7 @@
 -- Dummy SKIN object for testing without Rainmeter.
-local Dummy = {}
+local Settings = {}
 
-function Dummy:new()
+function Settings:new()
   local o = {}
   setmetatable(o, self)
   self.__index = self
@@ -28,7 +28,7 @@ function Dummy:new()
   return o
 end
 
-function Dummy:GetVariable(var_name, default)
+function Settings:GetVariable(var_name, default)
   if self.variables[var_name] ~= nil then
     return self.variables[var_name]
   end
@@ -40,4 +40,4 @@ function Dummy:GetVariable(var_name, default)
   return nil
 end
 
-return Dummy
+return Settings

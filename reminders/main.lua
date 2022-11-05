@@ -29,27 +29,14 @@ local function display_sched(now)
 end
 
 function Initialize()
-  local file_path = SKIN:GetVariable("Path", "schedule.csv")
+  local file_path = SKIN:GetVariable("RemindersPath", "reminders.csv")
   local sched_table = parser.parse_csv(file_path)
-  sched = Schedule:new(sched_table)
+  sched = Schedule:new(sched_table, "reminders")
 end
 
 function Update()
-  local now = os.date("%H:%M")
-  local today
+  local now = os.date("%Y/%m/%d %H:%M")
 
-  if SKIN:GetVariable("ISOWeek", true) then
-    today = os.date("%w") + 1
-  else
-    today = ((os.date("%w") + 5) % 6) + 1
-  end
-
-  -- if new day, set schedule to new day
-  if today ~= sched.day then
-    sched:set_day(today)
-  end
-
-  -- only update display when we've crossed a start/end time
   while now > sched.thresholds:peek() do
     os.execute("cls")
     sched.thresholds:iterate()

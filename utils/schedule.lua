@@ -4,7 +4,7 @@ local Schedule = LinkedList:new()
 
 -- Schedule class constructor.
 -- Queue containing the day's events in order.
-function Schedule:new(raw_sched)
+function Schedule:new(raw_sched, mode)
   if raw_sched == nil then
     error("Missing args for instantiating schedule queue")
   end
@@ -14,12 +14,28 @@ function Schedule:new(raw_sched)
   setmetatable(o, self)
   self.__index = self
 
-  o.thresholds = LinkedList:new()
-  o.day = 0
 
-  o:init_sched(raw_sched)
-  o:remove_empty()
-  o:merge_dupes()
+  o.thresholds = LinkedList:new()
+
+  mode = mode or "schedule"
+  if mode == "schedule" then
+    o.cols = 7
+  elseif mode == "reminders" then
+    o.cols = 1
+  else
+    error("Invalid schedule mode.")
+  end
+
+  o.mode = mode or "schedule"
+  if o.mode == "schedule" then
+    o:init_sched(raw_sched)
+    o:remove_empty()
+    o:merge_dupes()
+    o.day = 0
+  elseif o.mode == "reminders" then
+    o:init_sched(raw_sched)
+    o.day = 1
+  end
 
   o:init_thresholds(raw_sched)
 
@@ -28,7 +44,7 @@ end
 
 -- Converts the 2d table into a table of lists.
 function Schedule:init_sched(raw)
-  for day = 1, 7, 1 do
+  for day = 1, self.cols, 1 do
     self[day] = LinkedList:new()
     for row = 2, #raw, 1 do
       local label = raw[row][day + 2]
@@ -56,16 +72,24 @@ function Schedule:init_thresholds(raw)
   end
   table.sort(thresholds)
 
-  self.thresholds:append("00:00")
+  local first, last
+  if self.cols == 7 then
+    first = "00:00"
+    last = "24:00"
+  else
+    first = "0000-00-00 00:00"
+    last = "9999-12-31 24:00"
+  end
+  self.thresholds:append(first)
   for _, val in ipairs(thresholds) do
     self.thresholds:append(val)
   end
-  self.thresholds:append("24:00")
+  self.thresholds:append(last)
 end
 
 -- Removes events with blank labels.
 function Schedule:remove_empty()
-  for day = 1, 7, 1 do
+  for day = 1, self.cols, 1 do
     self:set_day(day)
     local length = #self
 
@@ -84,7 +108,7 @@ end
 
 -- Merges adjacent events with identical labels.
 function Schedule:merge_dupes()
-  for day = 1, 7, 1 do
+  for day = 1, self.cols, 1 do
     self:set_day(day)
     local length = #self
     local prev = self:peek()

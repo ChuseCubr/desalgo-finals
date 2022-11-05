@@ -12,6 +12,7 @@ A reimplementation of my project [Docket](https://github.com/ChuseCubr/RM-Docket
 * [Installation](#installation)
 * [Configuration](#configuration)
   * [Status Colors](#status-colors)
+* [Important Note](#important-note)
 
 ## Dependencies
 
@@ -61,3 +62,17 @@ For example:
 -- sets the ongoing status color to bright cyan
 ["Ongoing"] = "\27[96m",
 ```
+
+## Important Note
+
+If you exit the program incorrectly (not pressing `CTRL+C`), you well get an error popup that won't go away:
+
+![image](https://user-images.githubusercontent.com/27886422/200134864-03dd8d81-ddee-4bd8-898b-4d5f96ad73c2.png)
+
+You'll have to kill it with task manager:
+
+* `CTRL+SHIFT+ESC` or `CTRL+ALT+DEL > Task Manager`
+* Look for `Lua Console Standalone Interpreter` and select it
+* Click `End task`
+
+![image](https://user-images.githubusercontent.com/27886422/200134992-63f6cf33-29d9-4461-8a8d-b35871280686.png)

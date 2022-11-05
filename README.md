@@ -32,22 +32,22 @@ To configure the available settings, edit the `settings.lua` file.
 
 -- configure your settings here
 o.variables = {
--- csv file names
-["SchedulePath"] = "schedule.csv",
-["RemindersPath"] = "reminders.csv",
+  -- csv file names
+  ["SchedulePath"] = "schedule.csv",
+  ["RemindersPath"] = "reminders.csv",
 
--- csv delimiter based on your locale (most use `,`)
-["Delimiter"] = ",",
+  -- csv delimiter based on your locale (most use `,`)
+  ["Delimiter"] = ",",
 
--- sunday first day of the week
-["ISOWeek"] = true,
+  -- sunday first day of the week
+  ["ISOWeek"] = true,
 
--- status colors
--- change the number after the [
--- for reference: https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
-["Upcoming"] = "\27[0m",
-["Ongoing"] = "\27[32m",
-["Completed"] = "\27[31m",
+  -- status colors
+  -- change the number after the [
+  -- for reference: https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
+  ["Upcoming"] = "\27[0m",
+  ["Ongoing"] = "\27[32m",
+  ["Completed"] = "\27[31m",
 }
 ```
 

@@ -18,13 +18,16 @@ end
 
 -- Fancily prints events.
 local function display_sched(now)
-  print("Current time: " .. now .. "\n")
+  print("Schedule for the day")
+  print("Current time: " .. now)
+  print("-------------------\n")
   for event in sched:iterator() do
     local color = SKIN:GetVariable(event:get_status(now), "\27[0m")
     print(color .. event.label)
     print(event.start_time .. "-" .. event.end_time)
     print("\27[0m")
   end
+  print("-------------------")
   print("Press `CTRL+C` to exit.")
 end
 

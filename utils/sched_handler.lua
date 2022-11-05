@@ -60,6 +60,7 @@ function Schedule:init_thresholds(raw)
   for _, val in ipairs(thresholds) do
     self.thresholds:append(val)
   end
+  self.thresholds:append("24:00")
 end
 
 -- Removes events with blank labels.

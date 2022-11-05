@@ -18,6 +18,7 @@ function Settings:new()
     -- sunday first day of the week
     ["ISOWeek"] = true,
 
+    -- status colors
     -- change the number after the [
     -- for reference: https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
     ["Upcoming"] = "\27[0m",

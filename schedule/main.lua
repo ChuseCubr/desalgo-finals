@@ -1,7 +1,7 @@
 package.path = "../utils/?.lua;" .. package.path
 local parser = require("parser")
 local SKIN = require("settings"):new()
-local Schedule = require("sched_handler")
+local Schedule = require("schedule")
 
 local sched
 

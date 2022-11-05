@@ -21,7 +21,7 @@ Unlike the original, this is just a proof-of-concept/prototype. It's only a CLI,
 
 Download the source code with the green button above and extract the zip file.
 
-Edit `schedule\schedule.csv` to your needs. By default, it's read as ISO weeks (Sunday first day of the week). To change this, please see the [configuration section](https://github.com/ChuseCubr/desalgo-finals#configuration). 
+Edit `schedule\schedule.csv` and `reminders\reminders.csv` to your needs. By default, it's read as ISO weeks (Sunday first day of the week). To change this, please see the [configuration section](https://github.com/ChuseCubr/desalgo-finals#configuration). 
 
 ## Configuration
 

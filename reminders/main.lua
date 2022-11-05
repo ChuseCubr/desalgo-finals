@@ -30,7 +30,8 @@ end
 
 function Initialize()
   local file_path = SKIN:GetVariable("RemindersPath", "reminders.csv")
-  local sched_table = parser.parse_csv(file_path)
+  local delim = SKIN:GetVariable("Delimiter", ",")
+  local sched_table = parser.parse_csv(file_path, delim)
   sched = Schedule:new(sched_table, "reminders")
 end
 

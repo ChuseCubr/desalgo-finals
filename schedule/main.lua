@@ -1,4 +1,4 @@
-package.path = "../utils/?.lua;" .. package.path
+package.path = "../?.lua;../utils/?.lua;" .. package.path
 local parser = require("parser")
 local SKIN = require("settings"):new()
 local Schedule = require("schedule")
@@ -30,7 +30,8 @@ end
 
 function Initialize()
   local file_path = SKIN:GetVariable("Path", "schedule.csv")
-  local sched_table = parser.parse_csv(file_path)
+  local delim = SKIN:GetVariable("Delimiter", ",")
+  local sched_table = parser.parse_csv(file_path, delim)
   sched = Schedule:new(sched_table)
 end
 

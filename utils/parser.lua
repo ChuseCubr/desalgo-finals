@@ -13,13 +13,13 @@ function parser.file_exists(file_path)
 end
 
 -- Parses the CSV at the given path into a 2D table.
-function parser.parse_csv(file_path)
+function parser.parse_csv(file_path, sep)
   if not parser.file_exists(file_path) then
     error("File " .. file_path .. " does not exist.")
   end
 
-  local sep = SKIN:GetVariable("Delimiter", ",")
   local parsed = {}
+  sep = sep or ","
 
   for line in io.lines(file_path) do
     local line_buffer = {}

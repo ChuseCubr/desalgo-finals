@@ -2,9 +2,9 @@
 
 A reimplementation of my project [Docket](https://github.com/ChuseCubr/RM-Docket) with more appropriate data structures and algorithms.
 
-![Schedule Example](https://user-images.githubusercontent.com/27886422/200131964-a28e824c-ad10-4923-b262-e8b768db7577.png)
+![Schedule Example](https://user-images.githubusercontent.com/27886422/200166039-73a06108-f296-4dde-b71e-6403e8d6ee0d.png)
 
-![Reminders Example](https://user-images.githubusercontent.com/27886422/200131966-55a1dab1-d7ca-40e8-baea-22768801b662.png)
+![Reminders Example](https://user-images.githubusercontent.com/27886422/200166060-07b31435-27ef-4185-96e6-2cbbc8787b1b.png)
 
 ## Table of Contents
 

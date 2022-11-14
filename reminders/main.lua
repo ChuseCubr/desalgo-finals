@@ -40,7 +40,8 @@ end
 function Update()
   local now = os.date("%Y/%m/%d %H:%M")
 
-  while now > sched.thresholds:peek() do
+  -- only update display when we've crossed a start/end time
+  while now >= sched.thresholds:peek() do
     os.execute("cls")
     sched.thresholds:iterate()
     display_sched(now)

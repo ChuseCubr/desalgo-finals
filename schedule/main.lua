@@ -53,7 +53,7 @@ function Update()
   end
 
   -- only update display when we've crossed a start/end time
-  while now > sched.thresholds:peek() do
+  while now >= sched.thresholds:peek() do
     os.execute("cls")
     sched.thresholds:iterate()
     display_sched(now)

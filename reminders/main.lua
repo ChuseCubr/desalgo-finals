@@ -38,7 +38,7 @@ function Initialize()
 end
 
 function Update()
-  local now = os.date("%Y/%m/%d %H:%M")
+  local now = os.date("%Y.%m.%d %H:%M")
 
   -- only update display when we've crossed a start/end time
   while now >= sched.thresholds:peek() do

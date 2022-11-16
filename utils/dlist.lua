@@ -1,12 +1,35 @@
+-- Authors: Algoholics (Chase Villarroel,
+--                      Sayaka Aliyah Hernandez,
+--                      Shane Crisvy Ricafort)
+-- Date: November 16, 2022
+--
+-- Description:
+--     Contains the linked list class definition.
+--     Implemented as a doubly linked list with methods for iterating,
+--     appending, removing, and printing.
+--
+-- References:
+--   * Lua Documentation (https://www.lua.org/manual/5.4/)
+--   * DESALGO Lecture
+
+-- Initialize base classes
 local LinkedList = {}
 local Node = {}
 
 -- Node class constructor.
--- Building block for queues.
+-- Building block for linked lists.
+-- Args:
+--     value (any): Data for the node.
+--     prev (Node): Pointer to previous node.
+--     next (Node): Pointer to next node.
 function Node:new(value, prev, next)
+  -- create empty object
   local o = {}
+  -- give it the methods defined here
   setmetatable(o, self)
+  -- define object's self
   self.__index = self
+  -- object attributes
   o.value = value
   o.prev = prev or nil
   o.next = next or nil
@@ -14,11 +37,14 @@ function Node:new(value, prev, next)
 end
 
 -- Doubly linked list class constructor.
--- Implemented as a singly linked list.
 function LinkedList:new()
+  -- create empty object
   local o = {}
+  -- give it the methods defined here
   setmetatable(o, self)
+  -- define object's self
   self.__index = self
+  -- object attributes
   o.head = nil
   o.ptr = o.head
   o.tail = nil
@@ -31,7 +57,7 @@ function LinkedList:is_empty()
   return self.len == 0
 end
 
--- Metamethod for getting the length using #.
+-- Metamethod for getting the length using # (Lua's collection size syntax).
 function LinkedList:__len()
   return self.len
 end
@@ -44,7 +70,7 @@ function LinkedList:peek()
   return self.ptr.value
 end
 
--- Increments the pointer and gets the new value.
+-- Gets the value at the current pointer and increments the pointer.
 function LinkedList:iterate()
   if self.ptr == nil then
     return nil
@@ -78,7 +104,8 @@ end
 -- Removes and returns the value at the pointer
 function LinkedList:remove()
   if self.ptr == nil then
-    error("Attempted to remove from empty list.")
+    -- error handling
+    error("Attempted to remove at empty pointer.")
   end
 
   if self.ptr.prev == nil then
@@ -107,14 +134,17 @@ function LinkedList:remove()
 end
 
 -- Override metamethod for easier printing.
--- For debugging purposes.
+-- Converts the collection into a string for debugging purposes.
 function LinkedList:__tostring()
   if self.len == 0 then
+    -- if empty, return empty string
     return ""
   end
 
+  -- convert first node
   local stringed = tostring(self:peek())
 
+  -- convert the rest of the nodes with commas
   for _ = 2, self.len, 1 do
     stringed = stringed .. ", "
     stringed = stringed .. tostring(self:iterate())
